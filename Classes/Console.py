@@ -13,9 +13,9 @@ class Console:
         self.chess_setup()
         while True:
             if self.game.whomoves % 2 == 0:
-                print ("White's turn")
+                print("White's turn")
             if self.game.whomoves % 2 == 1:
-                print ("Black's turn")
+                print("Black's turn")
             start = input('Figure on which positions do you wanna move? If you want to save your game, type save.\n')
             if start == 'save':
                 name = input('Type name of file in which you wanna save the game.\n')
@@ -35,7 +35,7 @@ class Console:
 
     def chess_setup(self):
         for i in range(len(self.game.figures)):
-            self.game.board[self.game.figures[i].a][self.game.figures[i].b] += 1
+            self.game.board[self.game.figures[i].x][self.game.figures[i].y] += 1
 
     def positions(self, position):
         return int(position.split()[0]), int(position.split()[1])

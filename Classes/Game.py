@@ -20,7 +20,7 @@ class Game:
         doc.write(str(len(self.figures)) + '\n')
         for i in range(len(self.figures)):
             doc.write(str(self.figures[i].__class__.__name__) + " " + str(self.figures[i].color) + " " +
-                      str(self.figures[i].a) + " " + str(self.figures[i].b) + '\n')
+                      str(self.figures[i].x) + " " + str(self.figures[i].y) + '\n')
         doc.write(str(self.whomoves))
         doc.close()
 
@@ -34,7 +34,7 @@ class Game:
             module = import_module('Classes.' + str(parameters[0]))
             class_ = getattr(module, parameters[0])
             self.figures.append(class_(parameters[2], parameters[3], parameters[1],
-                              self.Images[str(parameters[1]) + str(parameters[0])]['Image'], self.board))
+                                       self.Images[str(parameters[1]) + str(parameters[0])]['Image'], self.board))
         self.whomoves = int(doc.readline())
 
     def create(self):
@@ -59,17 +59,26 @@ class Game:
                     self.figures.append(Pawn(j, i, color, self.Images[color + 'Pawn']['Image'], self.board))
 
     def move(self, startx, starty, destx, desty):
+        color = self.get_color()
         for i in range(len(self.figures)):
-            if self.figures[i].a == startx and self.figures[i].b == starty:
-                a = self.figures[i].movement(destx, desty, self.figures, self.whomoves)
+            if self.figures[i].x == startx and self.figures[i].y == starty:
+                a = self.figures[i].movement(destx, desty, self.figures, color, abs(startx-destx), abs(starty - desty))
                 if a == 0:
                     self.whomoves += 1
                 return a
 
-    def checkuj(self, startx, starty, destx, desty):
+    def control(self, startx, starty, destx, desty):
+        color = self.get_color()
         for i in range(len(self.figures)):
-            if self.figures[i].a == startx and self.figures[i].b == starty:
-                return self.figures[i].checkni(destx, desty, self.whomoves)
+            if self.figures[i].x == startx and self.figures[i].y == starty:
+                return self.figures[i].test(destx, desty, color, abs(startx - destx), abs(starty - desty))
 
     def parametres(self, parameters):
-        return str(parameters.split()[0]), str(parameters.split()[1]), int(parameters.split()[2]), int(parameters.split()[3])
+        return str(parameters.split()[0]), str(parameters.split()[1]), int(parameters.split()[2]), int(
+            parameters.split()[3])
+
+    def get_color(self):
+        if self.whomoves % 2 == 1:
+            return 'black'
+        else:
+            return 'white'
