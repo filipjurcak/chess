@@ -1,4 +1,4 @@
-from Tkinter import *
+from tkinter import *
 from PIL import Image, ImageTk
 from Classes.Game import Game
 
@@ -78,8 +78,8 @@ class Visualizer:
     def firstclick(self, event):
         if self.quit:
             quit()
-        self.startx = event.x / self.small_square
-        self.starty = event.y / self.small_square
+        self.startx = int(event.x / self.small_square)
+        self.starty = int(event.y / self.small_square)
         if self.starty == 8:
             if 0 <= self.startx <= 3:
                 name = input("Napis nazov suboru do ktoreho chces ulozit hru:\n")
@@ -95,11 +95,11 @@ class Visualizer:
     def secondClick(self, event):
         if self.quit:
             quit()
-        self.destx = event.x / self.small_square
-        self.desty = event.y / self.small_square
+        self.destx = int(event.x / self.small_square)
+        self.desty = int(event.y / self.small_square)
         if self.desty == 8:
             if 0 <= self.destx <= 3:
-                name = raw_input("Napis nazov suboru do ktoreho chces ulozit hru:\n")
+                name = input("Napis nazov suboru do ktoreho chces ulozit hru:\n")
                 name += '.txt'
                 self.game.save(name)
             else:

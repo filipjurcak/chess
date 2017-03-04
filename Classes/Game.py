@@ -25,9 +25,9 @@ class Game:
         doc.close()
 
     def load(self):
-        name = raw_input('Type name of file where you have your saved game: \n')
+        name = input('Type name of file where you have your saved game: \n')
         name += '.txt'
-        doc = open(name, 'rw+')
+        doc = open(name, 'r+')
         for i in range(int(doc.readline())):
             figure = doc.readline()
             parameters = self.parametres(figure)

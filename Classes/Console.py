@@ -16,14 +16,14 @@ class Console:
                 print ("White's turn")
             if self.game.whomoves % 2 == 1:
                 print ("Black's turn")
-            start = raw_input('Figure on which positions do you wanna move? If you want to save your game, type save.\n')
+            start = input('Figure on which positions do you wanna move? If you want to save your game, type save.\n')
             if start == 'save':
-                name = raw_input('Type name of file in which you wanna save the game.\n')
+                name = input('Type name of file in which you wanna save the game.\n')
                 name += '.txt'
                 self.game.save(name)
-                start = raw_input('Figure on which positions do you wanna move?\n')
+                start = input('Figure on which positions do you wanna move?\n')
             startx = self.positions(start)
-            dest = raw_input('Where do you wanna move it?\n')
+            dest = input('Where do you wanna move it?\n')
             destx = self.positions(dest)
             move = self.game.move(startx[0], startx[1], destx[0], destx[1])
             if move != 0:

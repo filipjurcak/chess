@@ -40,9 +40,8 @@ class Figure:
 
     def switch(self, input, figures, destx, desty):
         self.Images = List_images().Images
-        # self.Images = self.Images.Images
         while input != "Rook" and input != "Queen" and input != "Knight" and input != "Bishop":
-            input = raw_input("Choose which figure do you want: \n")
+            input = input("Choose which figure do you want: \n")
         color = self.color
         board = self.board
         for i in range(len(figures)):
