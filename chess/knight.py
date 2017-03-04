@@ -1,4 +1,4 @@
-from Classes.Figure import Figure
+from chess.figure import Figure
 
 
 class Knight(Figure):

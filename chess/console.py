@@ -1,4 +1,4 @@
-from Classes.Game import Game
+from chess.game import Game
 
 
 class Console:
@@ -28,9 +28,9 @@ class Console:
             move = self.game.move(startx[0], startx[1], destx[0], destx[1])
             if move != 0:
                 if move == 1:
-                    print ("Whites are Winners")
+                    print("Whites are Winners")
                 if move == 2:
-                    print ("Blacks are Winners")
+                    print("Blacks are Winners")
                 return
 
     def chess_setup(self):

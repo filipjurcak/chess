@@ -1,5 +1,5 @@
 from importlib import import_module
-from Dictionaries.List_images import List_images
+from chess.list_images import List_images
 
 
 class Figure:

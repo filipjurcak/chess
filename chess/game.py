@@ -1,10 +1,10 @@
-from Dictionaries.List_images import List_images
-from Classes.Bishop import Bishop
-from Classes.Knight import Knight
-from Classes.Rook import Rook
-from Classes.Queen import Queen
-from Classes.Pawn import Pawn
-from Classes.King import King
+from chess.list_images import List_images
+from chess.bishop import Bishop
+from chess.knight import Knight
+from chess.rook import Rook
+from chess.queen import Queen
+from chess.pawn import Pawn
+from chess.king import King
 from importlib import import_module
 
 
@@ -31,10 +31,11 @@ class Game:
         for i in range(int(doc.readline())):
             figure = doc.readline()
             parameters = self.parametres(figure)
-            module = import_module('Classes.' + str(parameters[0]))
-            class_ = getattr(module, parameters[0])
+            d = chr(ord(parameters[0][0]) - 32) + parameters[0][1:]
+            module = import_module('chess.' + parameters[0])
+            class_ = getattr(module, d)
             self.figures.append(class_(parameters[2], parameters[3], parameters[1],
-                                       self.Images[str(parameters[1]) + str(parameters[0])]['Image'], self.board))
+                                       self.Images[str(parameters[1]) + d]['Image'], self.board))
         self.whomoves = int(doc.readline())
 
     def create(self):
@@ -62,10 +63,10 @@ class Game:
         color = self.get_color()
         for i in range(len(self.figures)):
             if self.figures[i].x == startx and self.figures[i].y == starty:
-                a = self.figures[i].movement(destx, desty, self.figures, color, abs(startx-destx), abs(starty - desty))
-                if a == 0:
+                res = self.figures[i].movement(destx, desty, self.figures, color, abs(startx-destx), abs(starty - desty))
+                if res == 0:
                     self.whomoves += 1
-                return a
+                return res
 
     def control(self, startx, starty, destx, desty):
         color = self.get_color()

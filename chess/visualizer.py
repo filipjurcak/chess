@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
-from Classes.Game import Game
+from chess.game import Game
 
 
 class Visualizer:

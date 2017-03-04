@@ -1,5 +1,5 @@
-from Classes.Bishop import Bishop
-from Classes.Rook import Rook
+from chess.bishop import Bishop
+from chess.rook import Rook
 
 
 class Queen(Rook, Bishop):

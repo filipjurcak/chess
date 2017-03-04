@@ -1,5 +1,5 @@
-from Classes.Visualizer import Visualizer
-from Classes.Console import Console
+from chess.visualizer import Visualizer
+from chess.console import Console
 
 
 def main():
