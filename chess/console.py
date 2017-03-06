@@ -9,6 +9,10 @@ class Console:
         else:
             self.game.create()
 
+    def chess_setup(self):
+        for figure in self.game.figures:
+            self.game.board[figure.x][figure.y] += 1
+
     def start(self):
         self.chess_setup()
         while True:
@@ -26,6 +30,7 @@ class Console:
             if start == 'quit':
                 quit()
             startx = self.positions(start)
+            startx = start.split()
             dest = input('Where do you wanna move it?\n')
             destx = self.positions(dest)
             move = self.game.move(startx[0], startx[1], destx[0], destx[1])
@@ -35,10 +40,6 @@ class Console:
                 if move == 2:
                     print("Blacks are Winners")
                 return
-
-    def chess_setup(self):
-        for figure in self.game.figures:
-            self.game.board[figure.x][figure.y] += 1
 
     def positions(self, position):
         return int(position.split()[0]), int(position.split()[1])

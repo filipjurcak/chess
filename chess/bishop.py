@@ -3,11 +3,11 @@ from chess.figure import Figure
 
 class Bishop(Figure):
     def check(self, destx, desty, color, dx, dy):
-        if self.checkWayBishop(destx, desty) and self.color == color:
+        if self.check_way_bishop(destx, desty) and self.color == color:
             return True
         return False
 
-    def checkWayBishop(self, destx, desty):
+    def check_way_bishop(self, destx, desty):
         dx = destx - self.x
         dy = desty - self.y
         if abs(dx) != abs(dy) or (self.x == destx and self.y == desty):
