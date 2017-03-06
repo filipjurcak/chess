@@ -18,9 +18,9 @@ class Game:
     def save(self, name):
         doc = open(name, 'w+')
         doc.write(str(len(self.figures)) + '\n')
-        for i in range(len(self.figures)):
-            doc.write(str(self.figures[i].__class__.__name__) + " " + str(self.figures[i].color) + " " +
-                      str(self.figures[i].x) + " " + str(self.figures[i].y) + '\n')
+        for figure in self.figures:
+            doc.write(str(figure.__class__.__name__) + ' ' + str(figure.color) + ' ' + str(figure.x) + ' ' +
+                      str(figure.y) + '\n')
         doc.write(str(self.whomoves))
         doc.close()
 
@@ -28,14 +28,14 @@ class Game:
         name = input('Type name of file where you have your saved game: \n')
         name += '.txt'
         doc = open(name, 'r+')
-        for i in range(int(doc.readline())):
+        for _ in range(int(doc.readline())):
             figure = doc.readline()
             parameters = self.parametres(figure)
-            d = chr(ord(parameters[0][0]) - 32) + parameters[0][1:]
-            module = import_module('chess.' + parameters[0])
-            class_ = getattr(module, d)
+            classfigure = chr(ord(parameters[0][0]) + 32) + parameters[0][1:]
+            module = import_module('chess.' + classfigure)
+            class_ = getattr(module, parameters[0])
             self.figures.append(class_(parameters[2], parameters[3], parameters[1],
-                                       self.Images[str(parameters[1]) + d]['Image'], self.board))
+                                       self.Images[str(parameters[1]) + parameters[0]]['Image'], self.board))
         self.whomoves = int(doc.readline())
 
     def create(self):
@@ -61,18 +61,18 @@ class Game:
 
     def move(self, startx, starty, destx, desty):
         color = self.get_color()
-        for i in range(len(self.figures)):
-            if self.figures[i].x == startx and self.figures[i].y == starty:
-                res = self.figures[i].movement(destx, desty, self.figures, color, abs(startx-destx), abs(starty - desty))
+        for figure in self.figures:
+            if figure.x == startx and figure.y == starty:
+                res = figure.movement(destx, desty, self.figures, color, abs(startx - destx), abs(starty - desty))
                 if res == 0:
                     self.whomoves += 1
                 return res
 
     def control(self, startx, starty, destx, desty):
         color = self.get_color()
-        for i in range(len(self.figures)):
-            if self.figures[i].x == startx and self.figures[i].y == starty:
-                return self.figures[i].test(destx, desty, color, abs(startx - destx), abs(starty - desty))
+        for figure in self.figures:
+            if figure.x == startx and figure.y == starty:
+                return figure.check(destx, desty, color, abs(startx - destx), abs(starty - desty))
 
     def parametres(self, parameters):
         return str(parameters.split()[0]), str(parameters.split()[1]), int(parameters.split()[2]), int(

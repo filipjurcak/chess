@@ -2,11 +2,8 @@ from chess.figure import Figure
 
 
 class Bishop(Figure):
-    def __init__(self, x, y, color, image, board):
-        super().__init__(x, y, color, image, board)
-
     def check(self, destx, desty, color, dx, dy):
-        if dx <= 7 and dy <= 7 and self.checkWayBishop(destx, desty) and self.color == color and dx == dy:
+        if self.checkWayBishop(destx, desty) and self.color == color:
             return True
         return False
 
@@ -16,6 +13,8 @@ class Bishop(Figure):
         if abs(dx) != abs(dy):
             return False
         for i in range(abs(dx) - 1):
-            if self.board[self.x + int(dx/abs(dx)*(i + 1))][self.y + int(dy/abs(dy)*(i + 1))] == 1:
+            diffx = int(dx / abs(dx) * (i + 1))
+            diffy = int(dy / abs(dy) * (i + 1))
+            if self.board[self.x + diffx][self.y + diffy] == 1:
                 return False
         return True

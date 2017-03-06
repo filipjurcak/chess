@@ -4,20 +4,17 @@ from chess.console import Console
 
 def main():
     square = 720
-    a = ""
-    while a != "console" or a != "visualizer" or a != "ice cream":
-        a = input("What do you want?\n")
-        if a == "console" or a == "visualizer" or a == "ice cream":
-            break
-    if a == "ice cream":
-        print("Buy yourself\n")
-        return
-    if a == "console" or a == "visualizer":
-        c = input("Do you wanna load saved game?\n")
-        if a == "console":
-            b = Console(c)
-        if a == "visualizer":
-            b = Visualizer(square, c)
-    b.start()
+    name = ''
+    while name != "console" and name != "visualizer" and name != "ice cream":
+        name = input("What do you want?\n")
+    if name == "ice cream":
+        return print("Buy yourself\n")
+    if name == "console" or name == "visualizer":
+        state = input("Do you wanna load saved game?\n")
+        if name == "console":
+            game = Console(state)
+        if name == "visualizer":
+            game = Visualizer(square, state)
+    game.start()
 if __name__ == '__main__':
     main()

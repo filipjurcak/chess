@@ -38,26 +38,23 @@ class Visualizer:
                            font=('Purisa', 50), text="Quit")
 
     def chess_setup(self):
-        for i in range(len(self.game.figures)):
-            self.game.figures[i].image = self.game.figures[i].image.resize(
-                (int(self.small_square), int(self.small_square)),
-                Image.ANTIALIAS)
-            self.photo = ImageTk.PhotoImage(self.game.figures[i].image)
+        for figure in self.game.figures:
+            figure.image = figure.image.resize((int(self.small_square), int(self.small_square)), Image.ANTIALIAS)
+            self.photo = ImageTk.PhotoImage(figure.image)
             self.weak_reference.append(self.photo)
-            self.some_List[i] = self.w.create_image(
-                (self.game.figures[i].x * self.small_square) + self.small_square / 2,
-                (self.game.figures[i].y * self.small_square) + self.small_square / 2,
-                image=self.photo)
-            self.game.board[self.game.figures[i].x][self.game.figures[i].y] = 1
+            self.some_List.append(self.w.create_image((figure.x * self.small_square) + self.small_square / 2,
+                                                      (figure.y * self.small_square) + self.small_square / 2,
+                                                      image=self.photo))
+            self.game.board[figure.x][figure.y] = 1
 
     def visualize_valid_moves(self, startx, starty, color):
         for i in range(8):
             for j in range(8):
                 if self.game.control(startx, starty, i, j):
                     if self.game.board[i][j] == 1:
-                        for x in range(len(self.game.figures)):
-                            if self.game.figures[x].x == i and self.game.figures[x].y == j:
-                                if self.game.figures[x].color == color:
+                        for figure in self.game.figures:
+                            if figure.x == i and figure.y == j:
+                                if figure.color == color:
                                     if (i + j) % 2 == 0:
                                         m = "saddle brown"
                                     else:
@@ -86,9 +83,9 @@ class Visualizer:
                 self.save()
             else:
                 quit()
-        for i in range(len(self.game.figures)):
-            if self.game.figures[i].x == self.startx and self.game.figures[i].y == self.starty:
-                self.visualize_valid_moves(self.startx, self.starty, self.game.figures[i].color)
+        for figure in self.game.figures:
+            if figure.x == self.startx and figure.y == self.starty:
+                self.visualize_valid_moves(self.startx, self.starty, figure.color)
                 break
 
     def secondClick(self, event):
@@ -116,10 +113,11 @@ class Visualizer:
         self.redraw()
 
     def delete_stoogles(self):
-        for i in range(len(self.game.figures)):
+        for figure in self.game.figures:
             self.w.delete("all")
-            self.game.board[self.game.figures[i].x][self.game.figures[i].y] = 0
+            self.game.board[figure.x][figure.y] = 0
             self.weak_reference = []
+            self.some_List = []
 
     def redraw(self):
         self.delete_stoogles()
