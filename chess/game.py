@@ -15,6 +15,12 @@ class Game:
         self.figures = []
         self.Images = figures_images
 
+    def get_color(self):
+        if self.whomoves % 2 == 1:
+            return 'black'
+        else:
+            return 'white'
+
     def save(self, name):
         doc = open(name, 'w+')
         doc.write(str(len(self.figures)) + '\n')
@@ -23,6 +29,10 @@ class Game:
                       str(figure.y) + '\n')
         doc.write(str(self.whomoves))
         doc.close()
+
+    def parametres(self, parameters):
+        return str(parameters.split()[0]), str(parameters.split()[1]), int(parameters.split()[2]), int(
+            parameters.split()[3])
 
     def load(self):
         name = input('Type name of file where you have your saved game: \n')
@@ -61,21 +71,13 @@ class Game:
 
     def move(self, startx, starty, destx, desty):
         figure = [val for val in self.figures if (val.x == startx and val.y == starty)]
-        res = figure[0].movement(destx, desty, self.figures, abs(startx - destx), abs(starty - desty))
-        if res == 0:
-            self.whomoves += 1
-        return res
+        if figure[0].color == self.get_color():
+            res = figure[0].movement(destx, desty, self.figures, abs(startx - destx), abs(starty - desty))
+            if res == 0:
+                self.whomoves += 1
+            return res
 
     def control(self, startx, starty, destx, desty):
         figure = [val for val in self.figures if (val.x == startx and val.y == starty)]
-        return figure[0].check(destx, desty, self.get_color(), abs(startx - destx), abs(starty - desty))
-
-    def parametres(self, parameters):
-        return str(parameters.split()[0]), str(parameters.split()[1]), int(parameters.split()[2]), int(
-            parameters.split()[3])
-
-    def get_color(self):
-        if self.whomoves % 2 == 1:
-            return 'black'
-        else:
-            return 'white'
+        if figure[0].color == self.get_color():
+            return figure[0].check(destx, desty, abs(startx - destx), abs(starty - desty))

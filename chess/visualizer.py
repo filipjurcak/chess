@@ -13,8 +13,8 @@ class Visualizer:
         self.main = Tk()
         self.w = Canvas(self.main, width=square, height=square + square / 8)
         self.w.pack()
-        self.w.bind('<Button-3>', self.firstclick)
-        self.w.bind('<Button-1>', self.secondClick)
+        self.w.bind('<Button-3>', self.first_click)
+        self.w.bind('<Button-1>', self.second_click)
         self.square = square
         self.small_square = square / 8
         self.weak_reference = []
@@ -71,7 +71,7 @@ class Visualizer:
                                         (j + 1) * self.small_square, fill=m)
         self.chess_setup()
 
-    def firstclick(self, event):
+    def first_click(self, event):
         if self.quit:
             quit()
         self.startx = int(event.x / self.small_square)
@@ -84,7 +84,7 @@ class Visualizer:
         chosen_figure = [val for val in self.game.figures if (self.startx == val.x and self.starty == val.y)]
         self.visualize_valid_moves(self.startx, self.starty, chosen_figure[0].color)
 
-    def secondClick(self, event):
+    def second_click(self, event):
         if self.quit:
             quit()
         self.destx = int(event.x / self.small_square)

@@ -2,8 +2,8 @@ from chess.figure import Figure
 
 
 class Bishop(Figure):
-    def check(self, destx, desty, color, dx, dy):
-        if self.check_way_bishop(destx, desty) and self.color == color:
+    def check(self, destx, desty, dx, dy):
+        if self.check_way_bishop(destx, desty):
             return True
         return False
 

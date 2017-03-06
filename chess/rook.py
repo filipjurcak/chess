@@ -2,8 +2,8 @@ from chess.figure import Figure
 
 
 class Rook(Figure):
-    def check(self, destx, desty, color, dx, dy):
-        if self.color == color and self.check_way_rook(destx, desty):
+    def check(self, destx, desty, dx, dy):
+        if self.check_way_rook(destx, desty):
             return True
         return False
 
@@ -14,11 +14,11 @@ class Rook(Figure):
             return False
         for i in range(max(abs(dy), abs(dx)) - 1):
             if dx == 0:
-                diffy = int(dy / abs(dy) * i)
+                diffy = int(dy / abs(dy) * (i + 1))
                 if self.board[self.x][self.y + diffy] == 1:
                     return False
             if dy == 0:
-                diffx = int(dx / abs(dx) * i)
+                diffx = int(dx / abs(dx) * (i + 1))
                 if self.board[self.x + diffx][self.y] == 1:
                     return False
         return True
