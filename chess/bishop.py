@@ -10,9 +10,9 @@ class Bishop(Figure):
         dy = desty - self.y
         if abs(dx) != abs(dy) or (self.x == destx and self.y == desty):
             return False
-        for i in range(abs(dx) - 1):
-            diffx = int(dx / abs(dx) * (i + 1))
-            diffy = int(dy / abs(dy) * (i + 1))
+        for i in range(1, abs(dx)):
+            diffx = int(dx / abs(dx) * i)
+            diffy = int(dy / abs(dy) * i)
             if self.board[self.x + diffx][self.y + diffy] == 1:
                 return False
         return True
