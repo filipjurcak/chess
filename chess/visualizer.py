@@ -18,7 +18,6 @@ class Visualizer:
         self.square = square
         self.small_square = square / 8
         self.weak_reference = []
-        self.some_List = [[] for _ in range(32)]
         self.quit = False
 
     def create_chess(self):
@@ -40,11 +39,10 @@ class Visualizer:
     def chess_setup(self):
         for figure in self.game.figures:
             figure.image = figure.image.resize((int(self.small_square), int(self.small_square)), Image.ANTIALIAS)
-            self.photo = ImageTk.PhotoImage(figure.image)
-            self.weak_reference.append(self.photo)
-            self.some_List.append(self.w.create_image((figure.x * self.small_square) + self.small_square / 2,
-                                                      (figure.y * self.small_square) + self.small_square / 2,
-                                                      image=self.photo))
+            photo = ImageTk.PhotoImage(figure.image)
+            self.weak_reference.append(photo)
+            self.w.create_image((figure.x * self.small_square) + self.small_square / 2,
+                                (figure.y * self.small_square) + self.small_square / 2, image=photo)
             self.game.board[figure.x][figure.y] = 1
 
     def visualize_valid_moves(self, startx, starty, color):
@@ -83,10 +81,8 @@ class Visualizer:
                 self.save()
             else:
                 quit()
-        for figure in self.game.figures:
-            if figure.x == self.startx and figure.y == self.starty:
-                self.visualize_valid_moves(self.startx, self.starty, figure.color)
-                break
+        chosen_figure = [val for val in self.game.figures if (self.startx == val.x and self.starty == val.y)]
+        self.visualize_valid_moves(self.startx, self.starty, chosen_figure[0].color)
 
     def secondClick(self, event):
         if self.quit:
@@ -106,8 +102,7 @@ class Visualizer:
                         m = 'white'
                     else:
                         m = 'black'
-                    self.w.create_text(self.square / 2, self.square / 2, fill=m, font=('Purisa', 100),
-                                       text="Winner")
+                    self.w.create_text(self.square / 2, self.square / 2, fill=m, font=('Purisa', 100), text="Winner")
                     self.quit = True
                 return
         self.redraw()
@@ -117,7 +112,6 @@ class Visualizer:
             self.w.delete("all")
             self.game.board[figure.x][figure.y] = 0
             self.weak_reference = []
-            self.some_List = []
 
     def redraw(self):
         self.delete_stoogles()

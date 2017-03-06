@@ -10,7 +10,7 @@ class Rook(Figure):
     def checkWayRook(self, destx, desty):
         dx = destx - self.x
         dy = desty - self.y
-        if dx != 0 and dy != 0:
+        if dx != 0 and dy != 0 or (self.x == destx and self.y == desty):
             return False
         for i in range(max(abs(dy), abs(dx)) - 1):
             if dx == 0:

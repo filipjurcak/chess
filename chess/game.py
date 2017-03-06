@@ -1,4 +1,3 @@
-from chess.list_images import List_images
 from chess.bishop import Bishop
 from chess.knight import Knight
 from chess.rook import Rook
@@ -6,6 +5,7 @@ from chess.queen import Queen
 from chess.pawn import Pawn
 from chess.king import King
 from importlib import import_module
+from PIL import Image
 
 
 class Game:
@@ -13,7 +13,19 @@ class Game:
         self.board = [[0 for _ in range(8)] for _ in range(8)]
         self.whomoves = 0
         self.figures = []
-        self.Images = List_images().Images
+        self.Images = {
+            'blackRook': {'Image': Image.open("Images/Rook-Black.png")},
+            'blackKnight': {'Image': Image.open("Images/Horse-Black.png")},
+            'blackBishop': {'Image': Image.open("Images/Bishop-Black.png")},
+            'blackKing': {'Image': Image.open("Images/King-Black.png")},
+            'blackQueen': {'Image': Image.open("Images/Queen-Black.png")},
+            'blackPawn': {'Image': Image.open("Images/Pawn-Black.png")},
+            'whiteRook': {'Image': Image.open("Images/Rook-White.png")},
+            'whiteKnight': {'Image': Image.open("Images/Horse-White.png")},
+            'whiteBishop': {'Image': Image.open("Images/Bishop-White.png")},
+            'whiteKing': {'Image': Image.open("Images/King-White.png")},
+            'whiteQueen': {'Image': Image.open("Images/Queen-White.png")},
+            'whitePawn': {'Image': Image.open("Images/Pawn-White.png")}}
 
     def save(self, name):
         doc = open(name, 'w+')
@@ -60,19 +72,15 @@ class Game:
                     self.figures.append(Pawn(j, i, color, self.Images[color + 'Pawn']['Image'], self.board))
 
     def move(self, startx, starty, destx, desty):
-        color = self.get_color()
-        for figure in self.figures:
-            if figure.x == startx and figure.y == starty:
-                res = figure.movement(destx, desty, self.figures, color, abs(startx - destx), abs(starty - desty))
-                if res == 0:
-                    self.whomoves += 1
-                return res
+        figure = [val for val in self.figures if (val.x == startx and val.y == starty)]
+        res = figure[0].movement(destx, desty, self.figures, abs(startx - destx), abs(starty - desty))
+        if res == 0:
+            self.whomoves += 1
+        return res
 
     def control(self, startx, starty, destx, desty):
-        color = self.get_color()
-        for figure in self.figures:
-            if figure.x == startx and figure.y == starty:
-                return figure.check(destx, desty, color, abs(startx - destx), abs(starty - desty))
+        figure = [val for val in self.figures if (val.x == startx and val.y == starty)]
+        return figure[0].check(destx, desty, self.get_color(), abs(startx - destx), abs(starty - desty))
 
     def parametres(self, parameters):
         return str(parameters.split()[0]), str(parameters.split()[1]), int(parameters.split()[2]), int(

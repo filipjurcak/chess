@@ -16,8 +16,8 @@ class Console:
                 print("White's turn")
             else:
                 print("Black's turn")
-            start = input(
-                'Figure on which positions do you wanna move? If you want to save your game, type save, if quit, type quit.\n')
+            start = input('Figure on which positions do you wanna move?' + '\n' +
+                          'If you want to save your game, type save, if quit, type quit.\n')
             if start == 'save':
                 name = input('Type name of file in which you wanna save the game.\n')
                 name += '.txt'

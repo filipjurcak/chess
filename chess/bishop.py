@@ -10,7 +10,7 @@ class Bishop(Figure):
     def checkWayBishop(self, destx, desty):
         dx = destx - self.x
         dy = desty - self.y
-        if abs(dx) != abs(dy):
+        if abs(dx) != abs(dy) or (self.x == destx and self.y == desty):
             return False
         for i in range(abs(dx) - 1):
             diffx = int(dx / abs(dx) * (i + 1))
