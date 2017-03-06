@@ -1,5 +1,5 @@
 from importlib import import_module
-from chess.list_images import List_images
+from chess.list_images import images
 
 
 class Figure:
@@ -41,8 +41,6 @@ class Figure:
         return 0
 
     def switch(self, var, figures, destx, desty):
-        # images = Game().Images
-        images = List_images().Images
         while var != "Rook" and var != "Queen" and var != "Knight" and var != "Bishop":
             var = input("Choose which figure do you want: \n")
         figures[:] = [value for value in figures if (value.x != destx or value.y != desty)]

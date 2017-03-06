@@ -5,7 +5,7 @@ from chess.queen import Queen
 from chess.pawn import Pawn
 from chess.king import King
 from importlib import import_module
-from PIL import Image
+from .list_images import images as figures_images
 
 
 class Game:
@@ -13,19 +13,7 @@ class Game:
         self.board = [[0 for _ in range(8)] for _ in range(8)]
         self.whomoves = 0
         self.figures = []
-        self.Images = {
-            'blackRook': {'Image': Image.open("Images/Rook-Black.png")},
-            'blackKnight': {'Image': Image.open("Images/Horse-Black.png")},
-            'blackBishop': {'Image': Image.open("Images/Bishop-Black.png")},
-            'blackKing': {'Image': Image.open("Images/King-Black.png")},
-            'blackQueen': {'Image': Image.open("Images/Queen-Black.png")},
-            'blackPawn': {'Image': Image.open("Images/Pawn-Black.png")},
-            'whiteRook': {'Image': Image.open("Images/Rook-White.png")},
-            'whiteKnight': {'Image': Image.open("Images/Horse-White.png")},
-            'whiteBishop': {'Image': Image.open("Images/Bishop-White.png")},
-            'whiteKing': {'Image': Image.open("Images/King-White.png")},
-            'whiteQueen': {'Image': Image.open("Images/Queen-White.png")},
-            'whitePawn': {'Image': Image.open("Images/Pawn-White.png")}}
+        self.Images = figures_images
 
     def save(self, name):
         doc = open(name, 'w+')
@@ -59,17 +47,17 @@ class Game:
                     color = 'white'
                 if i == 0 or i == 7:
                     if j == 0 or j == 7:
-                        self.figures.append(Rook(j, i, color, self.Images[color + 'Rook']['Image'], self.board))
+                        self.figures.append(Rook(j, i, color, figures_images[color + 'Rook']['Image'], self.board))
                     if j == 1 or j == 6:
-                        self.figures.append(Knight(j, i, color, self.Images[color + 'Knight']['Image'], self.board))
+                        self.figures.append(Knight(j, i, color, figures_images[color + 'Knight']['Image'], self.board))
                     if j == 2 or j == 5:
-                        self.figures.append(Bishop(j, i, color, self.Images[color + 'Bishop']['Image'], self.board))
+                        self.figures.append(Bishop(j, i, color, figures_images[color + 'Bishop']['Image'], self.board))
                     if j == 3:
-                        self.figures.append(King(j, i, color, self.Images[color + 'King']['Image'], self.board))
+                        self.figures.append(King(j, i, color, figures_images[color + 'King']['Image'], self.board))
                     if j == 4:
-                        self.figures.append(Queen(j, i, color, self.Images[color + 'Queen']['Image'], self.board))
+                        self.figures.append(Queen(j, i, color, figures_images[color + 'Queen']['Image'], self.board))
                 if i == 1 or i == 6:
-                    self.figures.append(Pawn(j, i, color, self.Images[color + 'Pawn']['Image'], self.board))
+                    self.figures.append(Pawn(j, i, color, figures_images[color + 'Pawn']['Image'], self.board))
 
     def move(self, startx, starty, destx, desty):
         figure = [val for val in self.figures if (val.x == startx and val.y == starty)]
