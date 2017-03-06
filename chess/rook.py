@@ -3,9 +3,7 @@ from chess.figure import Figure
 
 class Rook(Figure):
     def check(self, destx, desty, dx, dy):
-        if self.check_way_rook(destx, desty):
-            return True
-        return False
+        return self.check_way_rook(destx, desty)
 
     def check_way_rook(self, destx, desty):
         dx = destx - self.x
